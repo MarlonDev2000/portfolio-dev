@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import Image from 'next/image'
+import Toasty from './components/Toasty'
 
 import photo from '../images/photo.jpg'
 import GitHubicon from '../images/logo-github.png'
@@ -103,7 +104,21 @@ const Form = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const [openToasty, setOpenToasty] = useState({
+    open: false,
+    message: '',
+  })
+
+  const onSubmit = () => {
+    setOpenToasty({
+      open: true,
+      message: 'Contato Enviado',
+    })
+  }
+
+  const handleOnClose = () => {
+    setOpenToasty(false)
+  }
 
   return (
     <>
@@ -142,6 +157,12 @@ const Form = () => {
         <InputStyled {...register('Email', { required: true, maxLength: 99 })} />
         {errors?.Email?.type === 'required' && <PStyled>Este campo e obrigatorio</PStyled>}
         <ButtonStyled type="submit"> Enviar </ButtonStyled>
+        <Toasty
+          open={openToasty.open}
+          severity="success"
+          message={openToasty.message}
+          onClose={handleOnClose}
+        />
       </FormStyled>
     </>
   )
