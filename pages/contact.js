@@ -57,22 +57,25 @@ const InputStyled = styled.input`
   display: block;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid white;
+  border-radius: 6px;
+  border: none;
   padding: 10px 15px;
   margin-bottom: 10px;
   font-size: 14px;
+  outline: none;
 `
 
-const LabelStyled = styled.label`
-  line-height: 2;
-  text-align: left;
+const TextAreaStyled = styled.textarea`
   display: block;
-  margin-bottom: 13px;
-  margin-top: 20px;
-  color: white;
-  font-size: 22px;
-  font-weight: 200;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  border-radius: 6px;
+  border: none;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  outline: none;
 `
 
 const ButtonStyled = styled.button`
@@ -139,23 +142,32 @@ const Form = () => {
           </AnchorStyled>
         </DivText>
       </DivProfile>
-      <H1>Entre em contato</H1>
+      <H1>Entre em contato (Fase de Teste)</H1>
       <FormStyled onSubmit={handleSubmit(onSubmit)}>
-        <LabelStyled>Nome:</LabelStyled>
         <InputStyled
-          {...register('firstName', { required: true, maxLength: 20, pattern: /^[A-Za-z]+$/i })}
+          placeholder="Nome"
+          {...register('name', { required: true, maxLength: 20, pattern: /^[A-Za-z\s]+$/i })}
         />
-        {errors?.firstName?.type === 'required' && <PStyled>Este campo e obrigatorio</PStyled>}
-        {errors?.firstName?.type === 'maxLength' && (
-          <PStyled>Primeiro Nome nao pode execeder 20 caracteres</PStyled>
+        {errors?.name?.type === 'required' && <PStyled>Campo obrigatório</PStyled>}
+        {errors?.name?.type === 'maxLength' && (
+          <PStyled>O nome nao pode execeder 20 caracteres</PStyled>
         )}
-        {errors?.firstName?.type === 'pattern' && <PStyled>Apenas letras do alfabeto</PStyled>}
-        <LabelStyled>Sobrenome:</LabelStyled>
-        <InputStyled {...register('lastName', { required: true, pattern: /^[A-Za-z]+$/i })} />
-        {errors?.lastName?.type === 'pattern' && <PStyled>Apenas letras do alfabeto</PStyled>}
-        <LabelStyled>E-mail:</LabelStyled>
-        <InputStyled {...register('Email', { required: true, maxLength: 99 })} />
-        {errors?.Email?.type === 'required' && <PStyled>Este campo e obrigatorio</PStyled>}
+        {errors?.name?.type === 'pattern' && <PStyled>Apenas letras do alfabeto</PStyled>}
+        <InputStyled
+          placeholder="Email"
+          {...register('email', { required: true, maxLength: 99 })}
+        />
+        {errors?.email?.type === 'required' && <PStyled>Campo obrigatório</PStyled>}
+        <InputStyled
+          placeholder="Assunto"
+          {...register('text', { required: true, maxLength: 99 })}
+        />
+        {errors?.text?.type === 'required' && <PStyled>Campo obrigatório</PStyled>}
+        <TextAreaStyled
+          placeholder="Descrição"
+          {...register('textarea', { required: true, maxLength: 255 })}
+        />
+        {errors?.textarea?.type === 'required' && <PStyled>Campo obrigatório</PStyled>}
         <ButtonStyled type="submit"> Enviar </ButtonStyled>
         <Toasty
           open={openToasty.open}
